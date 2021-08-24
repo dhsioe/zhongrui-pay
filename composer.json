@@ -1,0 +1,22 @@
+{
+    "name": "zhongrui/pay",
+    "description": "pay center for zrhz",
+    "authors": [
+      {
+        "name": "hsioe1111@gmail.com"
+      }
+    ],
+    "require": {
+      "php": ">=7.3",
+      "yansongda/pay": "~3.0.0"
+    },
+    "autoload": {
+      "psr-4": {
+        "Zhongrui\\Pay\\": "src/",
+        "Zhongrui\\Tests\\": "tests/"
+      }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
