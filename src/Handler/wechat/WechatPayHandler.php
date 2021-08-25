@@ -15,18 +15,6 @@ use Exception;
 
 class WechatPayHandler extends BaseHandler
 {
-
-    /**
-     *  APP
-     *  @var PayHandler;
-    */
-    protected $app;
-
-    public function __construct()
-    {
-        $this->app = PayHandler::wechat($this->config);
-    }
-
     /**
      *  格式化金额
      *  微信的金币单位为分制
@@ -37,28 +25,16 @@ class WechatPayHandler extends BaseHandler
         return (float)$price * 100;
     }
 
-    protected function handlerResult($result)
-    {
-        return [
-            'mch_id'    => $result->mch_id,
-            'nonce_str' => $result->nonce_str,
-            'prepay_id' => $result->prepay_id,
-            'sign'      => $result->sign,
-            'timestamp' => $result->timestamp
-        ];
-        //throw new Exception('ZhongruiPay Fail: '. $result['error_msg']);
-    }
-
     public function pay(string $price, array $option)
     {
-        $pay = $this->app->app([
-            'body'  =>  $option['title'],
+        PayHandler::config($this->getConfig());
+        return PayHandler::wechat()->app([
+            'description'  =>  $option['title'],
             'out_trade_no' => $option['order_num'],
-            'total_fee'    => $this->formatPrice($price),
-            'trade_type'   => 'app'
+            'amount'       => [
+                'total'    => $this->formatPrice($price)
+            ]
         ]);
-
-        return $this->handlerResult($pay);
     }
 
     /**
@@ -67,7 +43,8 @@ class WechatPayHandler extends BaseHandler
     */
     public function notify()
     {
-        return $this->app->callback();
+        PayHandler::config($this->getConfig());
+        return PayHandler::wechat()->callback();
     }
 }
 ?>

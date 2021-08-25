@@ -13,31 +13,20 @@ use Zhongrui\Pay\Handler\BaseHandler;
 
 class AlipayHandler extends BaseHandler
 {
-
-    /**
-     *  支付APP
-    */
-    protected $app;
-
-    public function __construct()
-    {
-        $this->app = PayHandler::alipay($this->config);
-    }
-
     public function pay(string $price, array $option)
     {
-         $pay = $this->app->app([
+         PayHandler::config($this->getConfig());
+         return PayHandler::alipay()->app([
              'out_trade_no' => $option['order_num'],
              'total_amount' => $price,
              'subject'      => $option['title']
          ]);
-
-         return $pay;
     }
 
     public function notify()
     {
-        return $this->app->callback();
+        PayHandler::config($this->getConfig());
+        return PayHandler::alipay()->callback();
     }
 }
 ?>

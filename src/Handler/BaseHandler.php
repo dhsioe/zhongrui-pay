@@ -25,5 +25,10 @@ class BaseHandler implements PayInterface
     {
         $this->config = $config;
     }
+
+    public function getConfig()
+    {
+        return $this->config;
+    }
 }
 ?>
