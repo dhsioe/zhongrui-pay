@@ -25,5 +25,7 @@ interface PayInterface
      *  @return mixed
     */
     public function notify();
+
+    public function setConfig($config);
 }
 ?>

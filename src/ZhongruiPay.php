@@ -8,46 +8,27 @@ declare(strict_types=1);
 */
 namespace Zhongrui\Pay;
 
-use Zhongrui\Pay\Handler\alipay\AlipayHandler;
-use Zhongrui\Pay\Handler\wechat\WechatPayHandler;
 
 class ZhongruiPay
 {
     /**
-     *  支付额外参数
-     *  @var array
+     *  PayInterface
+     *  @var PayInterface
     */
-    protected $payOptions;
+    protected $payHandler;
 
-    /**
-     *  支付方式
-     *  wechat-微信 alipay-支付宝
-     *  @var WechatPayHandler
-     *  @var AliPayHandler
-    */
-    protected $payContainer;
-
-    /**
-     *  支付金额
-     *  @var string
-    */
-    protected $payPrice;
-
-
-    public function __construct(string $payType, string $payPrice = '1', array $payOptions = [])
+    public function __construct($payType)
     {
-        $this->payContainer = PayContainer::getPayClass($payType);
-        $this->payPrice = $payPrice;
-        $this->payOptions = $payOptions;
+        $this->payHandler = PayContainer::getPayClass($payType);
     }
 
     /**
      *  统一支付方法
      *  @return mixed
     */
-    public function doPay()
+    public function doPay($payPrice, $payOptions)
     {
-        return $this->payContainer->pay($this->payPrice, $this->payOptions);
+        return $this->payHandler->pay($payPrice, $payOptions);
     }
 
     /**
@@ -56,7 +37,7 @@ class ZhongruiPay
     */
     public function doNotify()
     {
-        return $this->payContainer->notify();
+        return $this->payHandler->notify();
     }
 
     /**
@@ -64,7 +45,7 @@ class ZhongruiPay
     */
     public function setSetting($config)
     {
-        $this->payContainer->setConfig($config);
+        $this->payHandler->setConfig($config);
     }
 
 }

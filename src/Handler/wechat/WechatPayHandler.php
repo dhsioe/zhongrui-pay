@@ -13,7 +13,7 @@ use Yansongda\Pay\Pay as PayHandler;
 
 use Exception;
 
-class WechatPayHandler extends BaseHandler implements PayInterface
+class WechatPayHandler extends BaseHandler
 {
 
     /**

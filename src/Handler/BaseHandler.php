@@ -7,16 +7,19 @@
 */
 namespace Zhongrui\Pay\Handler;
 
-use Yansongda\Pay\Pay;
+use Zhongrui\Pay\PayInterface;
 
-class BaseHandler
+class BaseHandler implements PayInterface
 {
     /**
      * 支付统一配置
      * @var array
     */
-    protected $config;
+    protected $config = [];
 
+    public function pay(string $payPrice, array $payOptions) {}
+
+    public function notify() {}
     
     public function setConfig($config)
     {

@@ -17,8 +17,8 @@ class PayHandlerTest extends \PHPUnit\Framework\TestCase
     */
     public function testPay()
     {
-        $pay = new ZhongruiPay('wechat', '100', ['notify_url'=>'hello']);
-        $this->assertEquals($pay->doPay(), 'This is wechat pay');
+        $pay = new ZhongruiPay('wechat');
+        $this->assertEquals($pay->doPay('100', ['notify_url'=>'http://']), 'This is wechat pay');
     }
 
     /**
@@ -27,7 +27,7 @@ class PayHandlerTest extends \PHPUnit\Framework\TestCase
     */
     public function testNotify()
     {
-        $pay = new ZhongruiPay('wechat', '100', ['notify_url' => 'hello']);
+        $pay = new ZhongruiPay('wechat');
         $this->assertEquals($pay->doNotify(), 'This is wechat Notify');
     }
 }

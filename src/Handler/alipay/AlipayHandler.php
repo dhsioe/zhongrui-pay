@@ -9,9 +9,9 @@ namespace Zhongrui\Pay\Handler\alipay;
 
 use Yansongda\Pay\Pay as PayHandler;
 use Zhongrui\Pay\Handler\BaseHandler;
-use Zhongrui\Pay\PayInterface;
 
-class AlipayHandler extends BaseHandler implements PayInterface
+
+class AlipayHandler extends BaseHandler
 {
 
     /**
