@@ -12,7 +12,7 @@ class PayContainer
     const PAY_METHODS = [
         'wechat' => WechatPayHandler::class,
         'alipay' => AlipayHandler::class,
-        'applypay' => ApplePayHandler::class
+        'applepay' => ApplePayHandler::class
     ];
     
     public static function getPayClass(string $payType)
