@@ -23,6 +23,15 @@ class ZhongruiPay
     }
 
     /**
+     *  获取支付句柄
+     *  @return PayInterface
+    */
+    public function getPayHandler()
+    {
+        return $this->payHandler;
+    }
+
+    /**
      *  统一支付方法
      *  @return mixed
     */

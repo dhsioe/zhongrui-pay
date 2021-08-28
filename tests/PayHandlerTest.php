@@ -18,15 +18,7 @@ class PayHandlerTest extends \PHPUnit\Framework\TestCase
     */
     public function testPay()
     {
-        $pay = new ZhongruiPay('alipay');
-        $pay->setSetting($this->config);
-        $result = $pay->doPay('100', ['notify_url'=>'http://', 'title'=>'123', 'order_num'=>'H3093939129191']);
-        $this->assertNotEmpty($result);
 
-        $pay = new ZhongruiPay('wechat');
-        $pay->setSetting($this->config);
-        $result = $pay->doPay('100', ['notify_url'=>'http://', 'title'=>'123', 'order_num'=>'H3093939129191']);
-        $this->assertNotEmpty($result);
     }
 
     /**
@@ -35,13 +27,10 @@ class PayHandlerTest extends \PHPUnit\Framework\TestCase
     */
     public function testNotify()
     {
-        $pay = new ZhongruiPay('alipay');
-        $pay->setSetting($this->config);
-        $this->assertEquals($pay->doNotify(), 'This is wechat Notify');
-
-        $pay = new ZhongruiPay('wechat');
-        $pay->setSetting($this->config);
-        $this->assertEquals($pay->doNotify(), 'This is wechat Notify');
+        $pay = new ZhongruiPay('applypay');
+        $result = $pay->getPayHandler()->notify(['original_purchase_date_pst'=>'hello']);
+        print_r($result);
+        $this->assertTrue(true);
     }
 }
 ?>

@@ -5,13 +5,14 @@ use Zhongrui\Pay\Handler\alipay\AlipayHandler;
 use Zhongrui\Pay\Handler\wechat\WechatPayHandler;
 
 use Exception;
+use Zhongrui\Pay\Handler\applepay\ApplePayHandler;
 
 class PayContainer
 {
-
     const PAY_METHODS = [
         'wechat' => WechatPayHandler::class,
-        'alipay' => AlipayHandler::class
+        'alipay' => AlipayHandler::class,
+        'applypay' => ApplePayHandler::class
     ];
     
     public static function getPayClass(string $payType)
