@@ -22,13 +22,13 @@ class ApplePayHandler extends BaseHandler
      *  苹果正式内购环境
      *  @var string
     */
-    const NORMAT_URI = 'https://buy.itunes.apple.com/verifyReceipt';
+    const NORMAT_URI = "https://buy.itunes.apple.com/verifyReceipt";
 
     /**
      *  苹果沙箱内购环境
      *  @var string
     */
-    const SANDBOX_URI = 'https://sandbox.itunes.apple.com/verifyReceipt';
+    const SANDBOX_URI = "https://sandbox.itunes.apple.com/verifyReceipt";
 
     /**
      *  苹果支付失败原因表
@@ -47,6 +47,21 @@ class ApplePayHandler extends BaseHandler
 
     public function pay(string $price, array $option)
     {
+         // 苹果无需走服务端支付，只需接收回调验证结果即可
+    }
+
+    public function getVerfiyByApple($result)
+    {
+        $client = new Client();
+        $verfiyRv = $client->post(self::NORMAT_URI, ['json'=>['receipt-data'=>$result]]);
+        $verfiyRv = json_decode($verfiyRv->getBody(), true);
+        if($verfiyRv['status'] == '21007'){
+            // 沙盒数据
+            $verfiyRv = $client->post(self::SANDBOX_URI, ['json' => ['receipt-data' => $result]]);
+            $verfiyRv = json_decode($verfiyRv->getBody(), true);
+        }
+
+        return $verfiyRv;
     }
 
     /**
@@ -55,20 +70,16 @@ class ApplePayHandler extends BaseHandler
     */
     public function notify($result='')
     {
-        $response = ['status' => true, 'error_msg' => ''];
-        $client = new Client();
-        $verfiyRv = $client->post(self::NORMAT_URI, ['receipt-data' => $result]);
-        $verfiyRv = json_decode($verfiyRv->getBody(), true);
-        if($verfiyRv['status'] == '21007'){
-            // 沙盒数据
-            $verfiyRv = $client->post($this->sandboxUri, ['receipt-data' => $result]);
-            $verfiyRv = json_decode($verfiyRv->getBody(), true);
-        }
-        if(intval($verfiyRv['status']) === 1){
+        $response = ['status' => true, 'error_msg' => '', 'data' => []];
+        
+        $verfiyRv = $this->getVerfiyByApple($result);
+        if(intval($verfiyRv['status']) === 0){
              // 支付成功
+             $response['data'] = $verfiyRv['receipt']['in_app'][0];
              $response['message'] = '购买成功';
         }else{
             // 支付失败
+             $response['status']  = false;
              $response['message'] = '购买失败';
              $response['error_msg'] = self::ERROR_MESSAGES_MAP[$verfiyRv['status']];
         }
