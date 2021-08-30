@@ -26,7 +26,7 @@ class AlipayHandler extends BaseHandler implements PayInterface
         $result = $this->notify();
         return [
             'out_trade_no'   => $result['out_trade_no'],
-            'transaction_id' => $result['transaction_id']
+            'transaction_id' => $result['trade_no']
         ];
     }
 
