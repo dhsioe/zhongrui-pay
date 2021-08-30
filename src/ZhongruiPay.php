@@ -31,31 +31,5 @@ class ZhongruiPay
         return $this->payHandler;
     }
 
-    /**
-     *  统一支付方法
-     *  @return mixed
-    */
-    public function doPay($payPrice, $payOptions)
-    {
-        return $this->payHandler->pay($payPrice, $payOptions);
-    }
-
-    /**
-     *  统一回调方法
-     *  @return mixed
-    */
-    public function doNotify()
-    {
-        return $this->payHandler->notify();
-    }
-
-    /**
-     *  配置支付方式
-    */
-    public function setSetting($config)
-    {
-        $this->payHandler->setConfig($config);
-    }
-
 }
 ?>

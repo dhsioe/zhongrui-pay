@@ -26,6 +26,8 @@ interface PayInterface
     */
     public function notify();
 
+    public function notifyArray();
+    
     /**
      *  支付回调确认
      *  @return mixed

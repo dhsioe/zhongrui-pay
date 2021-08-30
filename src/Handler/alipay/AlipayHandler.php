@@ -21,7 +21,7 @@ class AlipayHandler extends BaseHandler implements PayInterface
          ]);
     }
 
-    public function formatNotify()
+    public function notifyArray()
     {
         $result = $this->notify();
         return [
