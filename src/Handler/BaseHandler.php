@@ -7,9 +7,11 @@
 */
 namespace Zhongrui\Pay\Handler;
 
-use Zhongrui\Pay\PayInterface;
+use Exception;
+use Yansongda\Pay\Pay;
 
-class BaseHandler implements PayInterface
+
+class BaseHandler
 {
     /**
      * 支付统一配置
@@ -17,16 +19,35 @@ class BaseHandler implements PayInterface
     */
     protected $config = [];
 
-    public function pay(string $payPrice, array $payOptions) {}
+    /**
+     * 获取支付实例
+    */
+    public function getPayApp(string $payType)
+    {
+        Pay::config($this->config);
+        switch($payType){
+            case 'wechat':
+                return Pay::wechat();
+            case 'alipay':
+                return Pay::alipay();
+        }
+        throw new Exception('支付方式不支持');
+    }
 
-    public function notify() {}
-    
-    public function setConfig($config)
+    /**
+     *  支付方式配置
+     *  @param array $config  相应的支付配置
+    */
+    public function setConfig(array $config)
     {
         $this->config = $config;
     }
 
-    public function getConfig()
+    /**
+     *  获取配置
+     *  @return array
+    */
+    public function getConfig(): array
     {
         return $this->config;
     }

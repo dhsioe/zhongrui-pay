@@ -12,6 +12,7 @@ use Zhongrui\Pay\ZhongruiPay;
 class PayHandlerTest extends \PHPUnit\Framework\TestCase
 {
     protected $config = [];
+    
     /**
      *  支付方法测试
      *  @group PayTest
@@ -27,10 +28,6 @@ class PayHandlerTest extends \PHPUnit\Framework\TestCase
     */
     public function testNotify()
     {
-        $pay = new ZhongruiPay('applypay');
-        $result = $pay->getPayHandler()->notify(['original_purchase_date_pst'=>'hello']);
-        print_r($result);
-        $this->assertTrue(true);
     }
 }
 ?>

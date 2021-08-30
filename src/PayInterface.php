@@ -26,6 +26,15 @@ interface PayInterface
     */
     public function notify();
 
-    public function setConfig($config);
+    /**
+     *  支付回调确认
+     *  @return mixed
+    */
+    public function confirm();
+
+    /**
+     *  设置支付配置
+    */
+    public function setConfig(array $config);
 }
 ?>

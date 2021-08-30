@@ -7,11 +7,8 @@
 */
 namespace Zhongrui\Pay\Handler\applepay;
 
-use Exception;
 use GuzzleHttp\Client;
 use Zhongrui\Pay\Handler\BaseHandler;
-use Zhongrui\Pay\PayInterface;
-use Yansongda\Pay\Pay as PayHandler;
 
 
 class ApplePayHandler extends BaseHandler
@@ -85,6 +82,11 @@ class ApplePayHandler extends BaseHandler
         }
         
         return $response;
+    }
+
+    public function confirm()
+    {
+        // ApplePay不需要支付确认
     }
 }
 ?>

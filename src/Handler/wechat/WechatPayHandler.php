@@ -9,11 +9,9 @@ namespace Zhongrui\Pay\Handler\wechat;
 
 use Zhongrui\Pay\Handler\BaseHandler;
 use Zhongrui\Pay\PayInterface;
-use Yansongda\Pay\Pay as PayHandler;
+use Yansongda\Pay\Pay;
 
-use Exception;
-
-class WechatPayHandler extends BaseHandler
+class WechatPayHandler extends BaseHandler implements PayInterface
 {
     /**
      *  格式化金额
@@ -27,10 +25,9 @@ class WechatPayHandler extends BaseHandler
 
     public function pay(string $price, array $option)
     {
-        PayHandler::config($this->getConfig());
-        return PayHandler::wechat()->app([
+        return $this->getPayApp('wechat')->app([
             'description'  =>  $option['title'],
-            'out_trade_no' => $option['order_num'],
+            'out_trade_no' =>  $option['order_num'],
             'amount'       => [
                 'total'    => $this->formatPrice($price)
             ]
@@ -43,8 +40,16 @@ class WechatPayHandler extends BaseHandler
     */
     public function notify()
     {
-        PayHandler::config($this->getConfig());
-        return PayHandler::wechat()->callback();
+        return $this->getPayApp('wechat')->callback();
+    }
+
+    /**
+     *  微信支付回调确认
+     *  @return XML
+    */
+    public function confirm()
+    {
+        return $this->getPayApp('wechat')->success();
     }
 }
 ?>
