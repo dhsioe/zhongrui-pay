@@ -34,13 +34,23 @@ class WechatPayHandler extends BaseHandler implements PayInterface
         ]);
     }
 
+    public function formatNotify()
+    {
+        $result = $this->notify();
+        return [
+            'out_trade_no'    =>  $result['resource']['ciphertext']['out_trade_no'],
+            'transaction_id'  =>  $result['resource']['ciphertext']['transaction_id']
+        ];
+    }
+
     /**
      *  微信支付回调通知
      *  @return XML
     */
     public function notify()
     {
-        return $this->getPayApp('wechat')->callback();
+        $result = $this->getPayApp('wechat')->callback();
+        return $result->toArray();
     }
 
     /**

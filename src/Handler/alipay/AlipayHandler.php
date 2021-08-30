@@ -21,9 +21,19 @@ class AlipayHandler extends BaseHandler implements PayInterface
          ]);
     }
 
+    public function formatNotify()
+    {
+        $result = $this->notify();
+        return [
+            'out_trade_no'   => $result['out_trade_no'],
+            'transaction_id' => $result['transaction_id']
+        ];
+    }
+
     public function notify()
     {
-        return $this->getPayApp('alipay')->callback();
+        $result = $this->getPayApp('alipay')->callback();
+        return $result->toArray();
     }
 
     public function confirm()
