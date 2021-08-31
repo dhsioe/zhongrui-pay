@@ -9,9 +9,9 @@ namespace Zhongrui\Pay\Handler\applepay;
 
 use GuzzleHttp\Client;
 use Zhongrui\Pay\Handler\BaseHandler;
+use Zhongrui\Pay\PayInterface;
 
-
-class ApplePayHandler extends BaseHandler
+class ApplePayHandler extends BaseHandler implements PayInterface
 {
     const MaxLen = 20;
 
@@ -87,6 +87,11 @@ class ApplePayHandler extends BaseHandler
     public function confirm()
     {
         // ApplePay不需要支付确认
+    }
+
+    public function notifyArray()
+    {
+        
     }
 }
 ?>
