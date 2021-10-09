@@ -17,6 +17,7 @@ class AlipayHandler extends BaseHandler implements PayInterface
          return $this->getPayApp('alipay')->app([
              'out_trade_no' => $option['order_num'],
              'total_amount' => $price,
+             'notify_url'   => $option['notify_url'],
              'subject'      => $option['title']
          ]);
     }

@@ -28,6 +28,7 @@ class WechatPayHandler extends BaseHandler implements PayInterface
         return $this->getPayApp('wechat')->app([
             'description'  =>  $option['title'],
             'out_trade_no' =>  $option['order_num'],
+            'notify_url'   =>  $option['notify_url'],
             'amount'       => [
                 'total'    => $this->formatPrice($price)
             ]
